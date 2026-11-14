@@ -45,19 +45,22 @@ void init() {
         .log_func = log_func,
     });
     
-    // renderer_mesh_id box = meshes_make_box(r, &(meshes_box_desc){
-    //     .depth = 1.0f,
-    //     .height = 1.0f,
-    //     .tiles = 1.0f,
-    //     .width = 1.0f 
-    // });
+    renderer_mesh_id box = meshes_make_box(r, &(meshes_box_desc){
+        .depth = 1.0f,
+        .height = 1.0f,
+        .width = 1.0f,
+        .tiles = 1
+    });
 
-    // HMM_Mat4 transform = HMM_Translate((HMM_Vec3){0.0f, 0.0f, 3.0f});
-    // HMM_Mat4 transform2 = HMM_Translate((HMM_Vec3){3.0f, 0.0f, 0.0f});
-    // renderer_make_instance(r, box, transform);
-    // renderer_make_instance(r, box, HMM_MulM4F(transform2, -1));
-    // renderer_make_instance(r, box, transform2);
-    // renderer_make_instance(r, box, HMM_MulM4F(transform2, -1));
+    HMM_Mat4 transform = HMM_Translate((HMM_Vec3){0.0f, 0.0f, 3.0f});
+    HMM_Mat4 transform2 = HMM_Translate((HMM_Vec3){0.0f, 0.0f, -3.0f});
+    HMM_Mat4 transform3 = HMM_Translate((HMM_Vec3){3.0f, 0.0f, 0.0f});
+    HMM_Mat4 transform4 = HMM_Translate((HMM_Vec3){-3.0f, 0.0f, 0.0f});
+
+    renderer_make_instance(r, box, transform);
+    renderer_make_instance(r, box, transform2);
+    renderer_make_instance(r, box, transform3);
+    renderer_make_instance(r, box, transform4);
 }
 
 void frame() {

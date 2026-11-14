@@ -10,6 +10,7 @@ renderer* make_renderer(renderer_desc *desc) {
         .index_type = RENDERER_INDEX_TYPE,
         .shader = sg_make_shader(default_shader_shader_desc(sg_query_backend())),
         .depth = { .compare = SG_COMPAREFUNC_LESS_EQUAL, .write_enabled = true },
+        .cull_mode = SG_CULLMODE_BACK,
         .layout.attrs = {
             [ATTR_default_shader_position].format = RENDERER_VERTEX_POSITION_FORMAT,
             [ATTR_default_shader_normal].format = RENDERER_VERTEX_NORMAL_FORMAT,
