@@ -42,7 +42,6 @@ FetchContent_MakeAvailable(HandmadeMath)
 add_executable(game
     src/main.c
     src/core/sokol_impl.c
-    src/files/stbi_impl.c
     src/core/renderer/renderer.c
     src/core/renderer/meshes/primitives.c
     src/core/renderer/resources/mesh.c
@@ -50,7 +49,8 @@ add_executable(game
     src/core/renderer/resources/material.c
     src/core/renderer/resources/texture.c
     src/core/renderer/resources/camera.c
-    src/files/files.c
+    src/core/renderer/file_loaders/stbi_impl.c
+    src/core/renderer/file_loaders/file_loaders.c
 )
 
 target_include_directories(game PRIVATE

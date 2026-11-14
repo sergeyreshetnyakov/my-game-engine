@@ -38,20 +38,6 @@ typedef uint32_t renderer_vertices_size_t;
 typedef uint16_t renderer_index_t;
 typedef uint16_t renderer_index_count_t;
 
-
-typedef struct {
-    const char *path;
-    unsigned char* data;
-    int width;
-    int height;
-    int channels;
-    int desired_channels;
-    bool flip;
-    char *error;
-} renderer_load_image_func_desc;
-
-typedef int(*renderer_load_image_func_t)(renderer_load_image_func_desc*);
-
 typedef enum { LOG_PANIC, LOG_ERROR, LOG_WARN, LOG_INFO } renderer_log_level;
 
 typedef struct {

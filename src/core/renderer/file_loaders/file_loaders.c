@@ -1,8 +1,8 @@
-#include "files.h"
+#include "file_loaders.h"
 #include <stb_image.h>
 #include <stdio.h>
 
-int files_load_image(files_load_image_desc *desc) {
+int renderer_load_image(renderer_load_image_desc *desc) {
     if(desc->flip) stbi_set_flip_vertically_on_load(true);
     
     unsigned char *data = stbi_load(desc->path, &desc->width, &desc->height, &desc->channels, desc->desired_channels);

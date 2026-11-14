@@ -1,16 +1,17 @@
 #include "../renderer.h"
 #include "../da_grow_macro.h"
+#include "../file_loaders/file_loaders.h"
 
 renderer_texture_id renderer_make_texture(renderer *r, const char* path) {
     RENDERER_GROW_ARRAY(r, r->textures, r->texture_count, r->texture_capacity);
 
-    renderer_load_image_func_desc raw_image = { 0 };
+    renderer_load_image_desc raw_image = { 0 };
 
     raw_image.path = path;
     raw_image.desired_channels = 4;
     raw_image.error = malloc(256); 
 
-    if (r->load_image_func(&raw_image)) {
+    if (renderer_load_image(&raw_image)) {
         r->log_func(&(renderer_log_func_desc){
             .tag = "load texture",
             .level = LOG_WARN,

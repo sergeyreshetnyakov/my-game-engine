@@ -15,7 +15,6 @@ struct renderer {
     renderer_mip_levels_t mip_levels;
 
     renderer_log_func_t log_func;
-    renderer_load_image_func_t load_image_func;
     
     renderer_mesh *meshes;
     renderer_mesh_id mesh_count;
@@ -41,7 +40,6 @@ typedef struct {
     renderer_texture_filter mipmap_filter;
     renderer_mip_levels_t mip_levels;
     renderer_log_func_t log_func;
-    renderer_load_image_func_t load_image_func;
 } renderer_desc;
 
 renderer* make_renderer(renderer_desc *desc);

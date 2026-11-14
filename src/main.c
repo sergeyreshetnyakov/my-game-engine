@@ -5,7 +5,6 @@
 #include <sokol_glue.h>
 #include <sokol_log.h>
 
-#include "files/files.h"
 #include "core/renderer/renderer.h"
 #include "core/renderer/meshes/primitives.h"
 
@@ -13,19 +12,6 @@ renderer *r = NULL;
 
 void log_func(renderer_log_func_desc *desc) {
     slog_func(desc->tag, desc->level, 0, desc->message, desc->line_nr, desc->filename, NULL);
-}
-
-int load_image_func(renderer_load_image_func_desc *desc) {
-    return files_load_image(&(files_load_image_desc){
-        .path = desc->path,
-        .width = desc->width,
-        .height = desc->height,
-        .data = desc->data,
-        .channels = desc->channels,
-        .desired_channels = desc->desired_channels,
-        .error = desc->error,
-        .flip = desc->flip
-    });
 }
 
 void init() {
@@ -41,7 +27,6 @@ void init() {
         .texture_filter = RENDERER_FILTER_LINEAR,
         .mipmap_filter = RENDERER_FILTER_LINEAR,
         .mip_levels = 4,
-        .load_image_func = load_image_func,
         .log_func = log_func,
     });
     

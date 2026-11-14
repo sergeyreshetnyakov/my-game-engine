@@ -7,6 +7,6 @@ typedef struct {
     int desired_channels;
     bool flip;
     char *error;
-} files_load_image_desc;
+} renderer_load_image_desc;
 
-int files_load_image(files_load_image_desc *desc);
+int renderer_load_image(renderer_load_image_desc *desc);

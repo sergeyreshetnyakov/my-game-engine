@@ -29,7 +29,6 @@ renderer* make_renderer(renderer_desc *desc) {
         .pipeline = pip,
         .sampler = smp,
         .mip_levels = desc->mip_levels,
-        .load_image_func = desc->load_image_func,
         .log_func = desc->log_func
     };
 
