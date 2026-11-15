@@ -3,7 +3,7 @@
 #include "../renderer_types.h"
 
 typedef struct {
-    float aspect_ratio;
+    float *aspect_ratio;
     float fov;
     float near_distance;
     float far_distance;

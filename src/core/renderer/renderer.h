@@ -27,6 +27,7 @@ struct renderer {
     renderer_texture *textures;
     renderer_texture_id texture_count;
     renderer_texture_id texture_capacity;
+    renderer_texture_id white_texture;
     renderer_texture_id fallback_texture;
 
     renderer_material *materials;

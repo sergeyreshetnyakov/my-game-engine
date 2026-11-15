@@ -39,6 +39,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(HandmadeMath)
 
+file(COPY ${CMAKE_SOURCE_DIR}/textures DESTINATION ${CMAKE_BINARY_DIR}/)
+
 add_executable(game
     src/main.c
     src/core/sokol_impl.c

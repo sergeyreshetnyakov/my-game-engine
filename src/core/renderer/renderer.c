@@ -4,7 +4,7 @@
 #include <sokol_glue.h>
 
 renderer* make_renderer(renderer_desc *desc) {
-    renderer *r = malloc(sizeof(renderer));
+    renderer *r = calloc(1, sizeof(renderer));
     
     sg_pipeline pip = sg_make_pipeline(&(sg_pipeline_desc){
         .index_type = RENDERER_INDEX_TYPE,
@@ -32,6 +32,7 @@ renderer* make_renderer(renderer_desc *desc) {
         .log_func = desc->log_func
     };
 
+    r->white_texture = renderer_make_white_texture(r);
     r->fallback_texture = renderer_make_chess_texture(r);
 
     return r;
@@ -46,8 +47,8 @@ void renderer_draw_frame(renderer *r) {
     });
     sg_apply_pipeline(r->pipeline);
     
-    renderer_mesh_id current_mesh_id = UINT16_MAX;
-    renderer_mesh current_mesh = {0};
+    renderer_mesh_id current_mesh_id = UINT32_MAX;
+    renderer_material_id current_material_id = UINT32_MAX;
     sg_bindings bind = {0};
     
     for (renderer_instance_id i = 0; i < r->instance_count; i++) {
@@ -55,23 +56,40 @@ void renderer_draw_frame(renderer *r) {
 
         if(!instance.is_visible) continue;
         
-        if(current_mesh_id != instance.mesh_id) {
-            current_mesh_id = instance.mesh_id;
-            current_mesh = r->meshes[current_mesh_id];
-            
-            bind.vertex_buffers[0] = current_mesh.vertex_buffer;
-            bind.index_buffer = current_mesh.index_buffer;
+        bool mesh_or_material_are_changed = false;
 
-            sg_apply_bindings(&bind);
+        if(current_mesh_id != instance.mesh_id) {
+            mesh_or_material_are_changed = true;
+            current_mesh_id = instance.mesh_id;
+            
+            bind.vertex_buffers[0] = r->meshes[current_mesh_id].vertex_buffer;
+            bind.index_buffer = r->meshes[current_mesh_id].index_buffer;
+
         }
+
+        if(current_material_id != instance.material_id) {
+            mesh_or_material_are_changed = true;
+            current_material_id = instance.material_id;
+
+            bind.views[0] = r->materials[current_material_id].diffuse;
+            bind.samplers[0] = r->sampler;
+        }
+
+        if (mesh_or_material_are_changed) sg_apply_bindings(&bind);
 
         vs_params_t vs_params ={
             .mvp = renderer_compute_mvp(r, instance.transformation),
-            .color = { 1.0f, 0.0f, 0.0f, 1.0f }
         };
-        sg_apply_uniforms(0, &SG_RANGE(vs_params));
 
-        sg_draw(0, current_mesh.index_count, 1);
+        HMM_Vec4 tint = r->materials[instance.material_id].tint;
+        fs_params_t fs_params = {
+            .color = { tint.X, tint.Y, tint.Z, tint.W }
+        };
+
+        sg_apply_uniforms(0, &SG_RANGE(vs_params));
+        sg_apply_uniforms(1, &SG_RANGE(fs_params));
+
+        sg_draw(0, r->meshes[current_mesh_id].index_count, 1);
     }
 
     sg_end_pass();

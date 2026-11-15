@@ -1,6 +1,6 @@
 #include "../renderer.h"
 #include "../da_grow_macro.h"
-#include "../file_loaders/files.h"
+#include "../files/files.h"
 
 renderer_texture_id renderer_make_texture(renderer *r, const char* path) {
     RENDERER_GROW_ARRAY(r, r->textures, r->texture_count, r->texture_capacity);
@@ -23,7 +23,6 @@ renderer_texture_id renderer_make_texture(renderer *r, const char* path) {
 
         return r->fallback_texture;
     }
-
     free(raw_image.error);
 
     sg_image img = sg_make_image(&(sg_image_desc){
@@ -37,6 +36,8 @@ renderer_texture_id renderer_make_texture(renderer *r, const char* path) {
         }
     });
 
+    renderer_free_image_data(raw_image.data);
+
     renderer_texture texture = {
         .image = img,
     };
@@ -45,6 +46,28 @@ renderer_texture_id renderer_make_texture(renderer *r, const char* path) {
     r->textures[r->texture_count++] = texture;
 
     return id;
+}
+
+renderer_texture_id renderer_make_white_texture(renderer *r) {
+    static const uint8_t white[4] = { 255, 255, 255, 255 };
+    
+    sg_image white_image = sg_make_image(&(sg_image_desc){
+        .width = 1,
+        .height = 1,
+        .pixel_format = SG_PIXELFORMAT_RGBA8,
+        .data = {
+            .ptr = &white,
+            .size = sizeof(white),
+        }
+    });
+
+    renderer_texture texture = {
+        .image = white_image,
+    };
+
+    RENDERER_GROW_ARRAY(r, r->textures, r->texture_count, r->texture_capacity);
+    renderer_texture_id id = r->texture_count;
+    r->textures[r->texture_count++] = texture;
 }
 
 renderer_texture_id renderer_make_chess_texture(renderer *r) {

@@ -10,3 +10,4 @@ typedef struct {
 } renderer_load_image_desc;
 
 int renderer_load_image(renderer_load_image_desc *desc);
+void renderer_free_image_data(unsigned char *data);

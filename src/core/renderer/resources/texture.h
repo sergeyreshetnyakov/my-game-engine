@@ -7,4 +7,5 @@ typedef struct {
 } renderer_texture;
 
 renderer_texture_id renderer_make_texture(renderer *r, const char* path);
+renderer_texture_id renderer_make_white_texture(renderer *r);
 renderer_texture_id renderer_make_chess_texture(renderer *r);
