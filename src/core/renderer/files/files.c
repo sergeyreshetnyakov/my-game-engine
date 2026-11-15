@@ -1,4 +1,4 @@
-#include "file_loaders.h"
+#include "files.h"
 #include <stb_image.h>
 #include <stdio.h>
 

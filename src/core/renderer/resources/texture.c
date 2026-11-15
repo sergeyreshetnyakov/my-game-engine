@@ -1,6 +1,6 @@
 #include "../renderer.h"
 #include "../da_grow_macro.h"
-#include "../file_loaders/file_loaders.h"
+#include "../file_loaders/files.h"
 
 renderer_texture_id renderer_make_texture(renderer *r, const char* path) {
     RENDERER_GROW_ARRAY(r, r->textures, r->texture_count, r->texture_capacity);

@@ -49,8 +49,8 @@ add_executable(game
     src/core/renderer/resources/material.c
     src/core/renderer/resources/texture.c
     src/core/renderer/resources/camera.c
-    src/core/renderer/file_loaders/stbi_impl.c
-    src/core/renderer/file_loaders/file_loaders.c
+    src/core/renderer/files/stbi_impl.c
+    src/core/renderer/files/files.c
 )
 
 target_include_directories(game PRIVATE

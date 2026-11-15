@@ -19,5 +19,4 @@ static inline int renderer_grow_array_impl(renderer *r, void **array, uint32_t c
     return 0;
 }
 
-#define RENDERER_GROW_ARRAY(r, arr, count, cap) \
-    renderer_grow_array_impl((r), (void**)&(arr), (count), &(cap), sizeof(*(arr)))
+#define RENDERER_GROW_ARRAY(r, arr, count, cap) renderer_grow_array_impl((r), (void**)&(arr), (count), &(cap), sizeof(*(arr)))
